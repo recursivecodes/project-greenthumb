@@ -11,9 +11,7 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     
@@ -39,6 +37,4 @@ jobs:
       run: docker build -t phx.ocir.io/toddrsharp/greenthumb/greenthumb-client:latest .
 
     - name: 'Docker Push'
-      uses: actions-hub/docker@master
-      with:
-        args: phx.ocir.io/toddrsharp/greenthumb/greenthumb-client:latest
+      run: docker push phx.ocir.io/toddrsharp/greenthumb/greenthumb-client:latest
