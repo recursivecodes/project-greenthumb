@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layoutFile :: head(~{::title}, ~{:: #extraHead})}">
+    <title>Home</title>
+    <!--/*/
+    <div id="extraHead" th:remove="tag">
+    /*/-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js" type="application/javascript"></script>
+    <script src="https://cdn.jsdelivr.net/npm/moment@2.27.0"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-moment@0.1.1"></script>
+    <script src="/scripts/main.js" type="application/javascript"></script>
+    <!--/*/
+    </div>
+    /*/-->
+</head>
+<body th:replace="~{layoutFile :: body(~{::section})}">
+<section>
+    <div th:replace="fragments/header :: header('Project GreenThumb')"></div>
+    <div th:replace="fragments/nav :: navmenu(${currentView})"></div>
+    <div class="row">
+        <div class="col-6">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Outlet</th>
+                        <th>Air Temp (&deg;F)</th>
+                        <th>Soil Temp (&deg;F)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="jumbo" id="currentOutletState"></span></td>
+                        <td><span class="jumbo" id="currentAirTemp"></span></td>
+                        <td><span class="jumbo" id="currentSoilTemp"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-6">
+            <table>
+                <thead>
+                <tr>
+                    <th>Moisture (%)</th>
+                    <th>Humidity (%)</th>
+                    <th>Light (lux)</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td><span class="jumbo" id="currentMoisture"></span></td>
+                    <td><span class="jumbo" id="currentHumidity"></span></td>
+                    <td><span class="jumbo" id="currentLight"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <canvas id="soilTempChart" style="height: 300px; width:100%;"></canvas>
+        </div>
+        <div class="col-6">
+            <canvas id="airTempChart" style="height: 300px; width:100%;"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-4">
+            <canvas id="humidityChart" style="height: 300px; width:100%;"></canvas>
+        </div>
+        <div class="col-4">
+            <canvas id="moistureChart" style="height: 300px; width:100%;"></canvas>
+        </div>
+        <div class="col-4">
+            <canvas id="lightChart" style="height: 300px; width:100%;"></canvas>
+        </div>
+    </div>
+</section>
+</body>
+</html>

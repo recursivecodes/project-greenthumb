@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title, extraHead)">
+    <title th:replace="${title}">Layout Title</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans" />
+    <!--/*/<div th:replace="${extraHead}"></div> /*/-->
+</head>
+<body th:fragment="body(content)">
+    <div th:replace="${content}">
+        <p>Layout content</p>
+    </div>
+    <footer class="footer">
+        Project GreenThumb &copy; 2021 &bull; <a href="https://recursive.codes">recursive.codes</a>
+    </footer>
+</body>
+</html>

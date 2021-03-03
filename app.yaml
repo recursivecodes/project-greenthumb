@@ -1,0 +1,83 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: greenthumb-client
+  labels:
+    app: greenthumb-client
+spec:
+  type: ClusterIP
+  selector:
+    app: greenthumb-client
+  ports:
+    - name: http
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: greenthumb-client
+spec:
+  selector:
+    matchLabels:
+      app: greenthumb-client
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: greenthumb-client
+        version: v1
+    spec:
+      containers:
+      - name: greenthumb-client
+        image: phx.ocir.io/toddrsharp/greenthumb/greenthumb-client:latest
+        env:
+          - name: MQTT_CLIENT_USER_NAME
+            valueFrom:
+              secretKeyRef:
+                name: greenthumb-client-secrets
+                key: rabbitMqUsername
+          - name: DATASOURCES_DEFAULT_USERNAME
+            valueFrom:
+              secretKeyRef:
+                name: greenthumb-client-secrets
+                key: dbUsername
+          - name: MQTT_CLIENT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: greenthumb-client-secrets
+                key: rabbitMqPassword
+          - name: DATASOURCES_DEFAULT_OCID
+            valueFrom:
+              secretKeyRef:
+                name: greenthumb-client-secrets
+                key: dbOcid
+          - name: MQTT_CLIENT_CLIENT_ID
+            valueFrom:
+              secretKeyRef:
+                name: greenthumb-client-secrets
+                key: rabbitMqClientId
+          - name: DATASOURCES_DEFAULT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: greenthumb-client-secrets
+                key: dbPassword
+          - name: MQTT_CLIENT_SERVER_URI
+            valueFrom:
+              secretKeyRef:
+                name: greenthumb-client-secrets
+                key: rabbitMqUri
+          - name: DATASOURCES_DEFAULT_WALLET_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: greenthumb-client-secrets
+                key: walletPassword
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8080
+          - containerPort: 8443
+      imagePullSecrets:
+      - name: regcred
+---

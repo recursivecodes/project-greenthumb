@@ -1,0 +1,28 @@
+micronaut:
+  application:
+    name: project-greenthumb
+  router:
+    static-resources:
+      default:
+        enabled: true
+        mapping: /**
+        paths: classpath:public
+datasources:
+  default:
+    ocid:
+    username:
+    password:
+    driverClassName: oracle.jdbc.OracleDriver
+    dialect: ORACLE
+mqtt:
+  client:
+    user-name:
+    password:
+    server-uri: ${MQTT_CLIENT_SERVER_URI}
+    client-id:
+jpa.default.properties.hibernate.hbm2ddl.auto: update
+jpa.default.properties.hibernate.show_sql: false
+oci:
+  config:
+    instance-principal:
+      enabled: true

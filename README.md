@@ -1,26 +1,15 @@
-## Micronaut 2.3.3-SNAPSHOT Documentation
+## Project GreenThumb
 
-- [User Guide](https://docs.micronaut.io/snapshot/guide/index.html)
-- [API Reference](https://docs.micronaut.io/snapshot/api/index.html)
-- [Configuration Reference](https://docs.micronaut.io/snapshot/guide/configurationreference.html)
-- [Micronaut Guides](https://guides.micronaut.io/index.html)
----
+### Build & Deploy
 
-## Feature views-thymeleaf documentation
+Build
 
-- [Micronaut Thymeleaf views documentation](https://micronaut-projects.github.io/micronaut-views/latest/guide/index.html#thymeleaf)
+```shell
+$ docker build -t phx.ocir.io/toddrsharp/insulin-helper/greenthumb-client:latest . 
+```
 
-- [https://www.thymeleaf.org/](https://www.thymeleaf.org/)
+Push
 
-## Feature rabbitmq documentation
-
-- [Micronaut RabbitMQ Messaging documentation](https://micronaut-projects.github.io/micronaut-rabbitmq/latest/guide/index.html)
-
-## Feature jdbc-hikari documentation
-
-- [Micronaut Hikari JDBC Connection Pool documentation](https://micronaut-projects.github.io/micronaut-sql/latest/guide/index.html#jdbc)
-
-## Feature http-client documentation
-
-- [Micronaut HTTP Client documentation](https://docs.micronaut.io/latest/guide/index.html#httpClient)
-
+```shell
+$ docker push phx.ocir.io/toddrsharp/insulin-helper/greenthumb-client:latest                                         
+```

@@ -1,6 +1,7 @@
 Thumbs.db
 .DS_Store
 .gradle
+build-resource/
 build/
 target/
 out/
@@ -12,3 +13,5 @@ out/
 .settings
 .classpath
 .factorypath
+server.jks
+/src/main/resources/application-docker.yml

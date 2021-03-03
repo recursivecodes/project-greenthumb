@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layoutFile :: head(~{::title}, ~{:: #extraHead})}">
+    <title>Reports</title>
+    <!--/*/
+    <div id="extraHead" th:remove="tag">
+    /*/-->
+    <!--/*/
+    </div>
+    /*/-->
+</head>
+<body th:replace="~{layoutFile :: body(~{::section})}">
+<section>
+    <div th:replace="fragments/header :: header('Project GreenThumb')"></div>
+    <div th:replace="fragments/nav :: navmenu(${currentView})"></div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Average Readings Per Hour of Day</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Hour</th>
+                        <th>Avg Air Temp (&deg;F)</th>
+                        <th>Avg Soil Temp (&deg;F)</th>
+                        <th>Avg Humidity (%)</th>
+                        <th>Avg Moisture (%)</th>
+                        <th>Avg Light (lux)</th>
+                    </tr>
+                </thead>
+                <tbody th:each="entry, stats : ${readingsByHour}">
+                    <tr>
+                        <td th:text="${entry.hour}"></td>
+                        <td th:text="${entry.avgAirTemp}"></td>
+                        <td th:text="${entry.avgSoilTemp}"></td>
+                        <td th:text="${entry.avgHumidity}"></td>
+                        <td th:text="${entry.avgMoisture}"></td>
+                        <td th:text="${entry.avgLight}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Average Readings Per Day of Month</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Day</th>
+                    <th>Avg Air Temp (&deg;F)</th>
+                    <th>Avg Soil Temp (&deg;F)</th>
+                    <th>Avg Humidity (%)</th>
+                    <th>Avg Moisture (%)</th>
+                    <th>Avg Light (lux)</th>
+                </tr>
+                </thead>
+                <tbody th:each="entry, stats : ${readingsByDayOfMonth}">
+                <tr>
+                    <td th:text="${entry.dayOfMonth}"></td>
+                    <td th:text="${entry.avgAirTemp}"></td>
+                    <td th:text="${entry.avgSoilTemp}"></td>
+                    <td th:text="${entry.avgHumidity}"></td>
+                    <td th:text="${entry.avgMoisture}"></td>
+                    <td th:text="${entry.avgLight}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Average Readings - Day vs. Night</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Avg Air Temp (&deg;F)</th>
+                        <th>Avg Soil Temp (&deg;F)</th>
+                        <th>Avg Humidity (%)</th>
+                        <th>Avg Moisture (%)</th>
+                        <th>Avg Light (lux)</th>
+                    </tr>
+                </thead>
+                <tbody th:each="entry, stats : ${readingsByDayNight}">
+                    <tr>
+                        <td th:text="${entry.timePeriod}"></td>
+                        <td th:text="${entry.avgAirTemp}"></td>
+                        <td th:text="${entry.avgSoilTemp}"></td>
+                        <td th:text="${entry.avgHumidity}"></td>
+                        <td th:text="${entry.avgMoisture}"></td>
+                        <td th:text="${entry.avgLight}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+</body>
+</html>
