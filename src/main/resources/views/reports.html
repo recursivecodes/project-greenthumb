@@ -94,6 +94,31 @@
             </table>
         </div>
     </div>
+    <div class="row">
+        <div class="col-12">
+            <h2>Average Readings - Overall</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Avg Air Temp (&deg;F)</th>
+                        <th>Avg Soil Temp (&deg;F)</th>
+                        <th>Avg Humidity (%)</th>
+                        <th>Avg Moisture (%)</th>
+                        <th>Avg Light (lux)</th>
+                    </tr>
+                </thead>
+                <tbody th:each="entry, stats : ${readingsOverall}">
+                    <tr>
+                        <td th:text="${entry.avgAirTemp}"></td>
+                        <td th:text="${entry.avgSoilTemp}"></td>
+                        <td th:text="${entry.avgHumidity}"></td>
+                        <td th:text="${entry.avgMoisture}"></td>
+                        <td th:text="${entry.avgLight}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </section>
 </body>
 </html>

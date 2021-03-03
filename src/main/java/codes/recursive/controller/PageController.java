@@ -38,11 +38,13 @@ public class PageController {
         List readingsByHour = abstractReadingRepository.getAvgReadingsByHour();
         List readingsByDayOfMonth = abstractReadingRepository.getAvgReadingsByDayOfMonth();
         List readingsByDayNight = abstractReadingRepository.getAvgReadingsByDayNight();
+        List readingsOverall = abstractReadingRepository.getAvgReadingsOverall();
         return new ModelAndView("reports", CollectionUtils.mapOf(
                 "currentView", "reports",
                 "readingsByHour", readingsByHour,
                 "readingsByDayOfMonth", readingsByDayOfMonth,
-                "readingsByDayNight", readingsByDayNight
+                "readingsByDayNight", readingsByDayNight,
+                "readingsOverall", readingsOverall
         ));
     }
 
