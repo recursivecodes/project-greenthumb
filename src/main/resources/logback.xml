@@ -18,5 +18,4 @@
     <logger name="org.hibernate.type.descriptor.sql" level="trace"/>
     -->
     <logger name="io.micronaut.mqtt" level="trace" />
-    <logger name="org.eclipse.paho" level="fine" />
 </configuration>

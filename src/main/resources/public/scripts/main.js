@@ -10,7 +10,8 @@ let maxPoints = 25;
 let ticks = {
   callback: function(tick, index, array) {
     return (index % 3) ? "" : tick;
-  }
+  },
+  maxTicksLimit: 10,
 };
 let legend = {display: false};
 

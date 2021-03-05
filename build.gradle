@@ -32,10 +32,10 @@ dependencies {
     implementation("io.micronaut.mqtt:micronaut-mqttv3")
     implementation("io.micronaut.views:micronaut-views-thymeleaf")
     runtimeOnly("ch.qos.logback:logback-classic")
-    implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-sdk:1.2.0.BUILD-SNAPSHOT")
+    implementation("io.micronaut.oraclecloud:micronaut-oraclecloud-sdk:1.2.1")
     implementation(enforcedPlatform("com.oracle.database.jdbc:ojdbc-bom:21.1.0.0"))
     implementation("com.oracle.database.jdbc:ojdbc8")
-    runtime("io.micronaut.oraclecloud:micronaut-oraclecloud-atp:1.2.0.BUILD-SNAPSHOT")
+    runtime("io.micronaut.oraclecloud:micronaut-oraclecloud-atp:1.2.1")
 }
 
 application {
