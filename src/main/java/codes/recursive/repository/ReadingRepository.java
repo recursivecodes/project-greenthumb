@@ -2,8 +2,6 @@ package codes.recursive.repository;
 
 import codes.recursive.domain.Reading;
 import io.micronaut.data.annotation.Repository;
-import io.micronaut.data.model.Page;
-import io.micronaut.data.model.Pageable;
 import io.micronaut.data.repository.PageableRepository;
 import io.reactivex.annotations.NonNull;
 
