@@ -1,6 +1,5 @@
 package codes.recursive.controller;
 
-import codes.recursive.domain.ReadingByHourDTO;
 import codes.recursive.repository.AbstractReadingRepository;
 import codes.recursive.repository.ReadingRepository;
 import io.micronaut.core.util.CollectionUtils;
@@ -10,7 +9,6 @@ import io.micronaut.views.ModelAndView;
 import io.micronaut.websocket.WebSocketBroadcaster;
 
 import java.util.List;
-import java.util.Map;
 
 @Controller("/page")
 public class PageController {

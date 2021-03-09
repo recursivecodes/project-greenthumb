@@ -11,6 +11,5 @@ import java.util.concurrent.CompletableFuture;
 
 @Repository
 public interface ReadingRepository extends PageableRepository<Reading, Long> {
-    Page<Reading> findAllOrderByCreatedOnDesc(Pageable pageable);
     CompletableFuture<Reading> saveAsync(@NonNull Reading reading);
 }
