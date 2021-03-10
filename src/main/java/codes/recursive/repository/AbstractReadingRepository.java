@@ -21,19 +21,24 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     }
 
     @Transactional
-    public List getAvgReadingsByHour() {
+    public List getAvgReadingsByHour(Boolean today) {
         String sql = "select\n" +
+                "       to_char(created_on, 'YYYY') as \"year\",\n" +
                 "       to_char(created_on, 'HH24') as \"hour\",\n" +
                 "       round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
                 "       round(avg(gr.reading.soilTemp), 2) as \"avgSoilTemp\",\n" +
                 "       round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
                 "       round(avg(gr.reading.humidity), 2) as \"avgHumidity\",\n" +
                 "       round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
-                "     from greenthumb_readings gr\n" +
-                "     group by to_char(created_on, 'HH24')\n" +
-                "     order by to_char(created_on, 'HH24')";
+                "     from greenthumb_readings gr\n";
+        if (today) {
+            sql+= "where to_char(created_on, 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')\n";
+        }
+        sql +=  "     group by to_char(created_on, 'YYYY'), to_char(created_on, 'HH24')\n" +
+                "     order by to_char(created_on, 'YYYY'), to_char(created_on, 'HH24')";
         return entityManager.createNativeQuery(sql)
                 .unwrap(org.hibernate.query.NativeQuery.class)
+                .addScalar("year", IntegerType.INSTANCE)
                 .addScalar("hour", IntegerType.INSTANCE)
                 .addScalar("avgAirTemp", FloatType.INSTANCE)
                 .addScalar("avgSoilTemp", FloatType.INSTANCE)
@@ -47,6 +52,7 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     @Transactional
     public List getAvgReadingsByDayNight() {
         String sql = "select \n" +
+                "    to_char(created_on, 'YYYY') as \"year\",\n" +
                 "    ( case \n" +
                 "        when cast( to_char(created_on, 'HH24') as number ) > 07 and cast( to_char(created_on, 'HH24') as number ) < 21 then 'Day'\n" +
                 "        else 'Night'\n" +
@@ -57,9 +63,10 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
                 "    round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
                 "    round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
                 "from greenthumb_readings gr\n" +
-                "group by ( case when cast( to_char(created_on, 'HH24') as number ) > 07 and cast( to_char(created_on, 'HH24') as number ) < 21 then 'Day' else 'Night' end )";
+                "group by to_char(created_on, 'YYYY'), ( case when cast( to_char(created_on, 'HH24') as number ) > 07 and cast( to_char(created_on, 'HH24') as number ) < 21 then 'Day' else 'Night' end )";
         return entityManager.createNativeQuery(sql)
                 .unwrap(org.hibernate.query.NativeQuery.class)
+                .addScalar("year", IntegerType.INSTANCE)
                 .addScalar("timePeriod", StringType.INSTANCE)
                 .addScalar("avgAirTemp", FloatType.INSTANCE)
                 .addScalar("avgSoilTemp", FloatType.INSTANCE)
@@ -72,6 +79,7 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     @Transactional
     public List getAvgReadingsByDayOfMonth() {
         String sql = "select \n" +
+                "    to_char(created_on, 'YYYY') as \"year\",\n" +
                 "    to_char(created_on, 'DD') as \"dayOfMonth\",\n" +
                 "    round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
                 "    round(avg(gr.reading.soilTemp), 2) as \"avgSoilTemp\",\n" +
@@ -79,10 +87,11 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
                 "    round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
                 "    round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
                 "from greenthumb_readings gr\n" +
-                "group by to_char(created_on, 'DD')\n" +
-                "order by to_char(created_on, 'DD')";
+                "group by to_char(created_on, 'YYYY'), to_char(created_on, 'DD')\n" +
+                "order by to_char(created_on, 'YYYY'), to_char(created_on, 'DD')";
         return entityManager.createNativeQuery(sql)
                 .unwrap(org.hibernate.query.NativeQuery.class)
+                .addScalar("year", IntegerType.INSTANCE)
                 .addScalar("dayOfMonth", IntegerType.INSTANCE)
                 .addScalar("avgAirTemp", FloatType.INSTANCE)
                 .addScalar("avgSoilTemp", FloatType.INSTANCE)
@@ -96,14 +105,17 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     @Transactional
     public List getAvgReadingsOverall() {
         String sql = "select \n" +
+                "    to_char(gr.created_on, 'YYYY') as \"year\",\n" +
                 "    round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
                 "    round(avg(gr.reading.soilTemp), 2) as \"avgSoilTemp\",\n" +
                 "    round(avg(gr.reading.humidity), 2) as \"avgHumidity\",\n" +
                 "    round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
                 "    round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
-                "from greenthumb_readings gr\n";
+                "from greenthumb_readings gr\n" +
+                "group by to_char(gr.created_on, 'YYYY')";
         return entityManager.createNativeQuery(sql)
                 .unwrap(org.hibernate.query.NativeQuery.class)
+                .addScalar("year", IntegerType.INSTANCE)
                 .addScalar("avgAirTemp", FloatType.INSTANCE)
                 .addScalar("avgSoilTemp", FloatType.INSTANCE)
                 .addScalar("avgMoisture", FloatType.INSTANCE)

@@ -33,12 +33,14 @@ public class PageController {
 
     @Get("/reports")
     ModelAndView reports() {
-        List readingsByHour = abstractReadingRepository.getAvgReadingsByHour();
+        List readingsByHourToday = abstractReadingRepository.getAvgReadingsByHour(true);
+        List readingsByHour = abstractReadingRepository.getAvgReadingsByHour(false);
         List readingsByDayOfMonth = abstractReadingRepository.getAvgReadingsByDayOfMonth();
         List readingsByDayNight = abstractReadingRepository.getAvgReadingsByDayNight();
         List readingsOverall = abstractReadingRepository.getAvgReadingsOverall();
         return new ModelAndView("reports", CollectionUtils.mapOf(
                 "currentView", "reports",
+                "readingsByHourToday", readingsByHourToday,
                 "readingsByHour", readingsByHour,
                 "readingsByDayOfMonth", readingsByDayOfMonth,
                 "readingsByDayNight", readingsByDayNight,

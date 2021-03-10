@@ -4,6 +4,7 @@ import io.micronaut.core.annotation.Introspected;
 
 @Introspected
 public class ReadingByDayNightDTO {
+    private int year;
     private String timePeriod;
     private float avgAirTemp;
     private float avgSoilTemp;
@@ -13,13 +14,22 @@ public class ReadingByDayNightDTO {
 
     public ReadingByDayNightDTO() {}
 
-    public ReadingByDayNightDTO(String timePeriod, float avgAirTemp, float avgSoilTemp, float avgMoisture, float avgHumidity, float avgLight) {
+    public ReadingByDayNightDTO(int year, String timePeriod, float avgAirTemp, float avgSoilTemp, float avgMoisture, float avgHumidity, float avgLight) {
+        this.year = year;
         this.timePeriod = timePeriod;
         this.avgAirTemp = avgAirTemp;
         this.avgSoilTemp = avgSoilTemp;
         this.avgMoisture = avgMoisture;
         this.avgHumidity = avgHumidity;
         this.avgLight = avgLight;
+    }
+
+    public int getYear() {
+        return year;
+    }
+
+    public void setYear(int year) {
+        this.year = year;
     }
 
     public String getTimePeriod() {
