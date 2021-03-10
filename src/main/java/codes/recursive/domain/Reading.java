@@ -10,7 +10,7 @@ import io.micronaut.data.annotation.TypeDef;
 import io.micronaut.data.model.DataType;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.Map;
 
 @Entity
@@ -23,10 +23,10 @@ public class Reading {
     private String reading;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSSXXX")
     @DateCreated
-    private Date createdOn;
+    private LocalDateTime createdOn;
 
     @Creator
-    public Reading(Long id, String reading, @Nullable Date createdOn) {
+    public Reading(Long id, String reading, @Nullable LocalDateTime createdOn) {
         this.id = id;
         this.reading = reading;
         this.createdOn = createdOn;
@@ -64,11 +64,11 @@ public class Reading {
         this.reading = reading;
     }
 
-    public Date getCreatedOn() {
+    public LocalDateTime getCreatedOn() {
         return createdOn;
     }
 
-    public void setCreatedOn(Date createdOn) {
+    public void setCreatedOn(LocalDateTime createdOn) {
         this.createdOn = createdOn;
     }
 }
