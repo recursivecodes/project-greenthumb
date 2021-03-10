@@ -34,8 +34,8 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
         if (today) {
             sql+= "where to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')\n";
         }
-        sql +=  "     group by to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY'), to_char(created_on, 'HH24')\n" +
-                "     order by to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY'), to_char(created_on, 'HH24')";
+        sql +=  "     group by to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY'), to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'HH24')\n" +
+                "     order by to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY'), to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'HH24')";
         return entityManager.createNativeQuery(sql)
                 .unwrap(org.hibernate.query.NativeQuery.class)
                 .addScalar("year", IntegerType.INSTANCE)
@@ -54,7 +54,7 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
         String sql = "select \n" +
                 "    to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY') as \"year\",\n" +
                 "    ( case \n" +
-                "        when cast( to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'HH24') as number ) > 07 and cast( to_char(created_on, 'HH24') as number ) < 21 then 'Day'\n" +
+                "        when cast( to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'HH24') as number ) > 07 and cast( to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'HH24') as number ) < 21 then 'Day'\n" +
                 "        else 'Night'\n" +
                 "    end ) as \"timePeriod\",\n" +
                 "    round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
