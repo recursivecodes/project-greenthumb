@@ -1,4 +1,5 @@
 //Establish the WebSocket connection and set up event handlers
+let rawReadings = [];
 let soilTempReadings = [];
 let airTempReadings = [];
 let humidityReadings = [];
@@ -31,6 +32,9 @@ const initCharts = () => {
   soilTempChart = new Chart(document.getElementById('soilTempChart').getContext('2d'), {
     type: 'line',
     options: {
+      annotation: {
+        annotations: []
+      },
       legend: legend,
       title: {text: "Soil Temps (\u00B0F)", display: true},
       scales: {
@@ -152,17 +156,30 @@ const connect = () => {
   };
   ws.onmessage = (msg) => {
     const reading = new Reading(JSON.parse(msg.data));
+    rawReadings.push(reading);
     soilTempReadings.push({y: reading.soilTemp, x: reading.readAt});
     airTempReadings.push({y: reading.airTemp, x: reading.readAt});
     humidityReadings.push({y: reading.humidity, x: reading.readAt});
     lightReadings.push({y: reading.light, x: reading.readAt});
     moistureReadings.push({y: reading.moisture, x: reading.readAt});
-    // keep the latest 25
+
+    // keep the latest `maxPoints`
+    if( rawReadings.length > maxPoints ) rawReadings.shift();
     if( soilTempReadings.length > maxPoints ) soilTempReadings.shift();
     if( airTempReadings.length > maxPoints ) airTempReadings.shift();
     if( humidityReadings.length > maxPoints ) humidityReadings.shift();
     if( lightReadings.length > maxPoints ) lightReadings.shift();
     if( moistureReadings.length > maxPoints ) moistureReadings.shift();
+
+    // annotate the soil chart if the outlet state has changed
+    if( rawReadings.length > 1 ) {
+      let latestReading = rawReadings[rawReadings.length-1]
+      let prevReading = rawReadings[rawReadings.length-2]
+      if( latestReading.outletState !== prevReading.outletState ) {
+        let annotation = getAnnotation(`Outlet: ${latestReading.outletState}`, latestReading.readAt);
+        soilTempChart.options.annotation.annotations.push(annotation)
+      }
+    }
     if (chartsInit) {
       soilTempChart.update();
       airTempChart.update();
@@ -188,6 +205,23 @@ const connect = () => {
     ws.close();
   };
 };
+
+const getAnnotation = (label, value) => {
+  return {
+    drawTime: "afterDatasetsDraw",
+    type: "line",
+    mode: "vertical",
+    scaleID: "x-axis-0",
+    value: value,
+    borderWidth: 5,
+    borderColor: "red",
+    label: {
+      content: label,
+      enabled: true,
+      position: "top"
+    }
+  }
+}
 
 //Send a message if it's not empty, then clear the input field
 const sendMessage = (message) => {
