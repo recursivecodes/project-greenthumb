@@ -179,6 +179,13 @@ const connect = () => {
         let annotation = getAnnotation(`Outlet: ${latestReading.outletState}`, latestReading.readAt);
         soilTempChart.options.annotation.annotations.push(annotation)
       }
+      soilTempChart.options.annotation.annotations.forEach((a, aIdx) => {
+        if(soilTempReadings.findIndex((d) => d.x === a.value) === -1) {
+          soilTempChart.options.annotation.annotations.splice(aIdx, 1);
+          console.log('Removing annotation, it is no longer in range.')
+        }
+      })
+
     }
     if (chartsInit) {
       soilTempChart.update();
