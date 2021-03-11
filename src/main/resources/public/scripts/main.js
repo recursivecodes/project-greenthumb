@@ -6,7 +6,7 @@ let lightReadings = [];
 let moistureReadings = [];
 let soilTempChart, airTempChart, humidityChart, lightChart, moistureChart;
 let chartsInit = false;
-let maxPoints = 25;
+let maxPoints = 50;
 let ticks = {
   callback: function(tick, index, array) {
     return (index % 3) ? "" : tick;

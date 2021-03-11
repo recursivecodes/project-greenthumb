@@ -61,4 +61,7 @@ tasks.withType(JavaExec) {
     }
 }
 
+nativeImage {
+    args('--initialize-at-run-time=codes.recursive.domain.ReadingOverallAverageDTO --initialize-at-run-time=codes.recursive.domain.Reading --initialize-at-runtime=codes.recursive.domain.ReadingByDayNightDTO --initialize-at-runtime=codes.recursive.domain.ReadingByDayOfMonthDTO --initialize-at-runtime=codes.recursive.domain.ReadingByHourDTO')
+}
 

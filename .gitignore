@@ -15,3 +15,5 @@ out/
 .factorypath
 server.jks
 /src/main/resources/application-docker.yml
+.vscode
+.envrc
