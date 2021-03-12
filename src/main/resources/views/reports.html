@@ -31,7 +31,7 @@
                 <tbody th:each="entry, stats : ${readingsByHourToday}">
                     <tr>
                         <td th:text="${entry.year}"></td>
-                        <td th:text="${entry.hour}"></td>
+                        <td th:text="${#numbers.formatInteger(entry.hour, 2)} + ':00'"></td>
                         <td th:text="${entry.avgAirTemp}"></td>
                         <td th:text="${entry.avgSoilTemp}"></td>
                         <td th:text="${entry.avgHumidity}"></td>
@@ -60,7 +60,7 @@
                 <tbody th:each="entry, stats : ${readingsByHour}">
                     <tr>
                         <td th:text="${entry.year}"></td>
-                        <td th:text="${entry.hour}"></td>
+                        <td th:text="${#numbers.formatInteger(entry.hour, 2)} + ':00'"></td>
                         <td th:text="${entry.avgAirTemp}"></td>
                         <td th:text="${entry.avgSoilTemp}"></td>
                         <td th:text="${entry.avgHumidity}"></td>

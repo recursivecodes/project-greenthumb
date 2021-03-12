@@ -80,19 +80,19 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     public List getAvgReadingsByDayOfMonth() {
         String sql = "select \n" +
                 "    to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY') as \"year\",\n" +
-                "    to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'DD') as \"dayOfMonth\",\n" +
+                "    to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'Mon DD') as \"dayOfMonth\",\n" +
                 "    round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
                 "    round(avg(gr.reading.soilTemp), 2) as \"avgSoilTemp\",\n" +
                 "    round(avg(gr.reading.humidity), 2) as \"avgHumidity\",\n" +
                 "    round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
                 "    round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
                 "from greenthumb_readings gr\n" +
-                "group by to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY'), to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'DD')\n" +
-                "order by to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY'), to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'DD')";
+                "group by to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY'), to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'Mon DD')\n" +
+                "order by to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY'), to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'Mon DD')";
         return entityManager.createNativeQuery(sql)
                 .unwrap(org.hibernate.query.NativeQuery.class)
                 .addScalar("year", IntegerType.INSTANCE)
-                .addScalar("dayOfMonth", IntegerType.INSTANCE)
+                .addScalar("dayOfMonth", StringType.INSTANCE)
                 .addScalar("avgAirTemp", FloatType.INSTANCE)
                 .addScalar("avgSoilTemp", FloatType.INSTANCE)
                 .addScalar("avgMoisture", FloatType.INSTANCE)
