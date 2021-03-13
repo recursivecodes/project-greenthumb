@@ -115,9 +115,15 @@ table {
     min-width: 100%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
-table thead tr {
+
+th {
+    position: sticky;
+    top: 0;
     background-color: #009879;
     color: #ffffff;
+}
+
+table thead tr {
     text-align: left;
 }
 table th, table td {
