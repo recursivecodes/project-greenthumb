@@ -50,7 +50,7 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
         String sql = "select \"year\", \"timePeriod\", \"avgAirTemp\", \"avgSoilTemp\", \"avgMoisture\", \"avgHumidity\", \"avgLight\"\n" +
                 "from vw_avg_by_day_night\n" +
                 "where \"year\" = :year\n" +
-                "order by \"timePeriod\";
+                "order by \"timePeriod\"";
         return entityManager.createNativeQuery(sql)
                 .setParameter("year", year)
                 .unwrap(org.hibernate.query.NativeQuery.class)
