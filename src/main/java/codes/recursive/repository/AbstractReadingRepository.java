@@ -30,6 +30,7 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
             sql += "from vw_avg_by_hour\n";
         }
         sql += "where \"year\" = :year\n";
+        sql += "order by \"hour\"";
         return entityManager.createNativeQuery(sql)
                 .unwrap(org.hibernate.query.NativeQuery.class)
                 .setParameter("year", year)
@@ -48,7 +49,8 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     public List getAvgReadingsByDayNight(int year) {
         String sql = "select \"year\", \"timePeriod\", \"avgAirTemp\", \"avgSoilTemp\", \"avgMoisture\", \"avgHumidity\", \"avgLight\"\n" +
                 "from vw_avg_by_day_night\n" +
-                "where \"year\" = :year";
+                "where \"year\" = :year\n" +
+                "order by \"timePeriod\";
         return entityManager.createNativeQuery(sql)
                 .setParameter("year", year)
                 .unwrap(org.hibernate.query.NativeQuery.class)
@@ -66,7 +68,8 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     public List getAvgReadingsByDayOfMonth(int year) {
         String sql = "select \"year\", \"dayOfMonth\", \"avgAirTemp\", \"avgSoilTemp\", \"avgMoisture\", \"avgHumidity\", \"avgLight\"\n" +
                 "from vw_avg_by_day\n" +
-                "where \"year\" = :year";
+                "where \"year\" = :year\n" +
+                "order by \"dayOfMonth\"";
         return entityManager.createNativeQuery(sql)
                 .setParameter("year", year)
                 .unwrap(org.hibernate.query.NativeQuery.class)
@@ -85,7 +88,7 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     public List getAvgReadingsOverall(int year) {
         String sql = "select \"year\", \"avgAirTemp\", \"avgSoilTemp\", \"avgMoisture\", \"avgHumidity\", \"avgLight\"\n" +
                 "from vw_avg_by_year\n" +
-                "where \"year\" = :year";
+                "where \"year\" = :year\n";
         return entityManager.createNativeQuery(sql)
                 .setParameter("year", year)
                 .unwrap(org.hibernate.query.NativeQuery.class)
