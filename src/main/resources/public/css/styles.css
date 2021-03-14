@@ -88,6 +88,7 @@ body {
     /* For mobile phones: */
     [class*="col-"] {
         width: 100%;
+        padding: 5px;
     }
     .jumbo {
         font-size: 18px;
