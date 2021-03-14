@@ -91,7 +91,7 @@ body {
         padding: 5px;
     }
     .nav-container {
-        padding: 0 5px;
+        padding: 0 5px !important;
     }
     .jumbo {
         font-size: 18px;
