@@ -21,7 +21,7 @@ mqtt:
     server-uri: ${MQTT_CLIENT_SERVER_URI}
     client-id:
 jpa.default.properties.hibernate.hbm2ddl.auto: update
-jpa.default.properties.hibernate.show_sql: true
+jpa.default.properties.hibernate.show_sql: false
 oci:
   config:
     instance-principal:
