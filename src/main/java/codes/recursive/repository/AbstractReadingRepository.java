@@ -22,22 +22,14 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
 
     @Transactional
     public List getAvgReadingsByHour(Boolean today, int year) {
-        String sql = "select\n" +
-                "       to_char(created_on, 'YYYY') as \"year\",\n" +
-                "       to_char(created_on, 'HH24') as \"hour\",\n" +
-                "       round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
-                "       round(avg(gr.reading.soilTemp), 2) as \"avgSoilTemp\",\n" +
-                "       round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
-                "       round(avg(gr.reading.humidity), 2) as \"avgHumidity\",\n" +
-                "       round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
-                "     from greenthumb_readings gr\n" +
-                "     where 1 = 1\n";
-        if (today) {
-            sql+= "and to_char(created_on, 'YYYY-MM-DD') = to_char(current_timestamp, 'YYYY-MM-DD')\n";
+        String sql = "select \"year\", \"hour\", \"avgAirTemp\", \"avgSoilTemp\", \"avgMoisture\", \"avgHumidity\", \"avgLight\"\n";
+        if(today) {
+            sql += "from vw_avg_by_hour_today\n";
         }
-        sql += "      and extract(year from created_on) = :year\n";
-        sql +=  "     group by to_char(created_on, 'YYYY'), to_char(created_on, 'HH24')\n" +
-                "     order by to_char(created_on, 'YYYY'), to_char(created_on, 'HH24')";
+        else {
+            sql += "from vw_avg_by_hour\n";
+        }
+        sql += "where \"year\" = :year\n";
         return entityManager.createNativeQuery(sql)
                 .unwrap(org.hibernate.query.NativeQuery.class)
                 .setParameter("year", year)
@@ -54,21 +46,9 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
 
     @Transactional
     public List getAvgReadingsByDayNight(int year) {
-        String sql = "select \n" +
-                "    to_char(created_on, 'YYYY') as \"year\",\n" +
-                "    ( case \n" +
-                "        when cast( to_char(created_on, 'HH24') as number ) > 07 and cast( to_char(created_on, 'HH24') as number ) < 21 then 'Day'\n" +
-                "        else 'Night'\n" +
-                "    end ) as \"timePeriod\",\n" +
-                "    round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
-                "    round(avg(gr.reading.soilTemp), 2) as \"avgSoilTemp\",\n" +
-                "    round(avg(gr.reading.humidity), 2) as \"avgHumidity\",\n" +
-                "    round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
-                "    round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
-                "from greenthumb_readings gr\n" +
-                "where 1=1\n" +
-                "and extract(year from created_on) = :year\n" +
-                "group by to_char(created_on, 'YYYY'), ( case when cast( to_char(created_on, 'HH24') as number ) > 07 and cast( to_char(created_on, 'HH24') as number ) < 21 then 'Day' else 'Night' end )";
+        String sql = "select \"year\", \"timePeriod\", \"avgAirTemp\", \"avgSoilTemp\", \"avgMoisture\", \"avgHumidity\", \"avgLight\"\n" +
+                "from vw_avg_by_day_night\n" +
+                "where \"year\" = :year";
         return entityManager.createNativeQuery(sql)
                 .setParameter("year", year)
                 .unwrap(org.hibernate.query.NativeQuery.class)
@@ -84,19 +64,9 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
     }
     @Transactional
     public List getAvgReadingsByDayOfMonth(int year) {
-        String sql = "select \n" +
-                "    to_char(created_on, 'YYYY') as \"year\",\n" +
-                "    to_char(created_on, 'Mon DD') as \"dayOfMonth\",\n" +
-                "    round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
-                "    round(avg(gr.reading.soilTemp), 2) as \"avgSoilTemp\",\n" +
-                "    round(avg(gr.reading.humidity), 2) as \"avgHumidity\",\n" +
-                "    round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
-                "    round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
-                "from greenthumb_readings gr\n" +
-                "where 1=1\n" +
-                "and extract(year from created_on) = :year\n" +
-                "group by to_char(created_on, 'YYYY'), to_char(created_on, 'Mon DD')\n" +
-                "order by to_char(created_on, 'YYYY'), to_char(created_on, 'Mon DD')";
+        String sql = "select \"year\", \"dayOfMonth\", \"avgAirTemp\", \"avgSoilTemp\", \"avgMoisture\", \"avgHumidity\", \"avgLight\"\n" +
+                "from vw_avg_by_day\n" +
+                "where \"year\" = :year";
         return entityManager.createNativeQuery(sql)
                 .setParameter("year", year)
                 .unwrap(org.hibernate.query.NativeQuery.class)
@@ -113,17 +83,9 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
 
     @Transactional
     public List getAvgReadingsOverall(int year) {
-        String sql = "select \n" +
-                "    to_char(created_on, 'YYYY') as \"year\",\n" +
-                "    round(avg(gr.reading.airTemp), 2) as \"avgAirTemp\",\n" +
-                "    round(avg(gr.reading.soilTemp), 2) as \"avgSoilTemp\",\n" +
-                "    round(avg(gr.reading.humidity), 2) as \"avgHumidity\",\n" +
-                "    round(avg(gr.reading.moisture), 2) as \"avgMoisture\",\n" +
-                "    round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
-                "from greenthumb_readings gr\n" +
-                "where 1=1\n" +
-                "and extract(year from created_on) = :year\n" +
-                "group by to_char(created_on, 'YYYY')";
+        String sql = "select \"year\", \"avgAirTemp\", \"avgSoilTemp\", \"avgMoisture\", \"avgHumidity\", \"avgLight\"\n" +
+                "from vw_avg_by_year\n" +
+                "where \"year\" = :year";
         return entityManager.createNativeQuery(sql)
                 .setParameter("year", year)
                 .unwrap(org.hibernate.query.NativeQuery.class)
