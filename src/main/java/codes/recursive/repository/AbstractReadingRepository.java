@@ -31,9 +31,9 @@ public abstract class AbstractReadingRepository implements PageableRepository<Re
                 "       round(avg(gr.reading.humidity), 2) as \"avgHumidity\",\n" +
                 "       round(avg(gr.reading.light), 2) as \"avgLight\"\n" +
                 "     from greenthumb_readings gr\n" +
-                "     where 1 = 1";
+                "     where 1 = 1\n";
         if (today) {
-            sql+= "and to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY-MM-DD') = to_char(sysdate, 'YYYY-MM-DD')\n";
+            sql+= "and to_char(from_tz(created_on, 'GMT') at time zone 'America/New_York', 'YYYY-MM-DD') = to_char(current_timestamp, 'YYYY-MM-DD')\n";
         }
         sql += "      and extract(year from created_on) = :year\n";
         sql +=  "     group by extract(year from from_tz(created_on, 'GMT') at time zone 'America/New_York'), extract(hour from from_tz(created_on, 'GMT') at time zone 'America/New_York')\n" +
