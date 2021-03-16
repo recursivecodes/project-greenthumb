@@ -1,8 +1,11 @@
 package codes.recursive.messaging;
 
+import codes.recursive.client.PushoverClient;
 import codes.recursive.domain.Reading;
+import codes.recursive.pushover.PushNotificationResponse;
 import codes.recursive.repository.ReadingRepository;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.micronaut.context.annotation.Property;
 import io.micronaut.context.env.Environment;
 import io.micronaut.http.MediaType;
 import io.micronaut.mqtt.annotation.MqttSubscriber;
@@ -20,11 +23,27 @@ public class GreenThumbConsumer {
     private final WebSocketBroadcaster broadcaster;
     private final ReadingRepository readingRepository;
     private final Environment environment;
+    private final String userKey;
+    private final String apiKey;
+    private final PushoverClient pushoverClient;
+    private final long interval = 1000 * 60 * 20;
 
-    public GreenThumbConsumer(WebSocketBroadcaster broadcaster, ReadingRepository readingRepository, Environment environment) {
+    private long lastAlert = System.currentTimeMillis();
+
+    public GreenThumbConsumer(
+            WebSocketBroadcaster broadcaster,
+            ReadingRepository readingRepository,
+            Environment environment,
+            @Property(name = "codes.recursive.pushover.userKey") String userKey,
+            @Property(name = "codes.recursive.pushover.apiKey") String apiKey,
+            PushoverClient pushoverClient
+    ) {
         this.broadcaster = broadcaster;
         this.readingRepository = readingRepository;
         this.environment = environment;
+        this.userKey = userKey;
+        this.apiKey = apiKey;
+        this.pushoverClient = pushoverClient;
     }
 
     @Topic("greenthumb/readings")
@@ -35,6 +54,17 @@ public class GreenThumbConsumer {
         }
         else {
             LOG.info("[localhost]: skipping persistence");
+        }
+        int soilMoisture = (int) reading.getReadingAsMap().get("moisture");
+
+        if( (System.currentTimeMillis() - lastAlert > interval) && soilMoisture < 50) {
+            PushNotificationResponse response = pushoverClient.pushMessage(
+                    apiKey,
+                    userKey,
+                    "Soil Moisture Alert! Current moisture: " + soilMoisture,
+                    "http://greenthumb.toddrsharp.com:8080/page"
+            ).blockingFirst();
+            lastAlert = System.currentTimeMillis();
         }
         broadcaster.broadcastAsync(data, MediaType.APPLICATION_JSON_TYPE);
     }

@@ -27,3 +27,8 @@ jpa.default.properties.hibernate.show_sql: true
 oci:
   config:
     profile: DEFAULT
+codes:
+  recursive:
+    pushover:
+      userKey: ${CODES_RECURSIVE_PUSHOVER_USER_KEY}
+      apiKey: ${CODES_RECURSIVE_PUSHOVER_API_KEY}

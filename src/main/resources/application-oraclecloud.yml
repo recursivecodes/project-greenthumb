@@ -26,3 +26,8 @@ oci:
   config:
     instance-principal:
       enabled: true
+codes:
+  recursive:
+    pushover:
+      userKey: ${CODES_RECURSIVE_PUSHOVER_USER_KEY}
+      apiKey: ${CODES_RECURSIVE_PUSHOVER_API_KEY}
