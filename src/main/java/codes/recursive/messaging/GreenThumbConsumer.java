@@ -51,20 +51,19 @@ public class GreenThumbConsumer {
         Reading reading = new Reading(data);
         if( environment.getActiveNames().contains("oraclecloud") ) {
             readingRepository.saveAsync(reading);
+            int soilMoisture = (int) reading.getReadingAsMap().get("moisture");
+            if( (System.currentTimeMillis() - lastAlert > interval) && soilMoisture < 50) {
+                PushNotificationResponse response = pushoverClient.pushMessage(
+                        apiKey,
+                        userKey,
+                        "Soil Moisture Alert! Current moisture: " + soilMoisture,
+                        "http://greenthumb.toddrsharp.com:8080/page"
+                ).blockingFirst();
+                lastAlert = System.currentTimeMillis();
+            }
         }
         else {
             LOG.info("[localhost]: skipping persistence");
-        }
-        int soilMoisture = (int) reading.getReadingAsMap().get("moisture");
-
-        if( (System.currentTimeMillis() - lastAlert > interval) && soilMoisture < 50) {
-            PushNotificationResponse response = pushoverClient.pushMessage(
-                    apiKey,
-                    userKey,
-                    "Soil Moisture Alert! Current moisture: " + soilMoisture,
-                    "http://greenthumb.toddrsharp.com:8080/page"
-            ).blockingFirst();
-            lastAlert = System.currentTimeMillis();
         }
         broadcaster.broadcastAsync(data, MediaType.APPLICATION_JSON_TYPE);
     }
