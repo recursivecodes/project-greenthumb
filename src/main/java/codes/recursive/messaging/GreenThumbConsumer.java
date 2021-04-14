@@ -27,7 +27,7 @@ public class GreenThumbConsumer {
     private final String apiKey;
     private final PushoverClient pushoverClient;
     private final long interval = 1000 * 60 * 20;
-    private final int moistureThreshold = 30;
+    private final int moistureThreshold = 15;
 
     private long lastAlert = System.currentTimeMillis();
 
