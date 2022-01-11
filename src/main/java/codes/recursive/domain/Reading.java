@@ -40,8 +40,7 @@ public class Reading {
         this.reading = reading;
     }
 
-    public Reading() {
-    }
+    public Reading() {}
 
     public Long getId() {
         return id;

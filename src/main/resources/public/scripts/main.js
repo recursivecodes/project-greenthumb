@@ -133,6 +133,7 @@ class Reading {
   humidity;
   light;
   moisture;
+  moistureTarget;
   outletState;
   readAt;
 
@@ -142,6 +143,7 @@ class Reading {
     this.humidity = +parseFloat(reading.humidity).toFixed(2);
     this.light = +parseFloat(reading.light).toFixed(2);
     this.moisture = +parseFloat(reading.moisture).toFixed(2);
+    this.moistureTarget = +parseFloat(reading.waterTarget).toFixed(2);
     this.outletState = reading.outletState ? 'ON' : 'OFF';
     this.readAt = new Date();
   }
@@ -199,6 +201,7 @@ const connect = () => {
     document.querySelector('#currentSoilTemp').innerHTML = reading.soilTemp;
     document.querySelector('#currentHumidity').innerHTML = reading.humidity;
     document.querySelector('#currentMoisture').innerHTML = reading.moisture;
+    document.querySelector('#currentMoistureTarget').innerHTML = `(${reading.moistureTarget})`;
     document.querySelector('#currentLight').innerHTML = reading.light;
   };
   ws.onclose = (e) => {

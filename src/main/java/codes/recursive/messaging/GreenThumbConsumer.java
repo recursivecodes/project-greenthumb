@@ -26,8 +26,6 @@ public class GreenThumbConsumer {
     private final String userKey;
     private final String apiKey;
     private final PushoverClient pushoverClient;
-    private final long interval = 1000 * 60 * 20;
-    private final int moistureThreshold = 15;
 
     private long lastAlert = System.currentTimeMillis();
 
@@ -53,7 +51,10 @@ public class GreenThumbConsumer {
         if( environment.getActiveNames().contains("oraclecloud") ) {
             readingRepository.saveAsync(reading);
             int soilMoisture = (int) reading.getReadingAsMap().get("moisture");
+            long interval = 1000 * 60;
+            int moistureThreshold = 15;
             if( (System.currentTimeMillis() - lastAlert > interval) && soilMoisture < moistureThreshold) {
+                LOG.info("Sending push notification...");
                 PushNotificationResponse response = pushoverClient.pushMessage(
                         apiKey,
                         userKey,

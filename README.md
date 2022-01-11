@@ -13,6 +13,10 @@ Read about Project GreenThumb:
 Build
 
 ```shell
+$ ./gradlew assemble && docker build -t phx.ocir.io/toddrsharp/greenthumb/greenthumb-client:latest . && docker push phx.ocir.io/toddrsharp/greenthumb/greenthumb-client:latest
+```
+
+```shell
 $ docker build -t phx.ocir.io/toddrsharp/insulin-helper/greenthumb-client:latest . 
 ```
 
