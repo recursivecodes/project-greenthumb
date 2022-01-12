@@ -107,6 +107,7 @@ const initCharts = () => {
         pointBackgroundColor: "#4f733f",
         backgroundColor: "#71966f",
         lineColor: "#336e00",
+        borderColor: "#336e00",
         data: moistureReadings,
       },
       {
@@ -114,6 +115,7 @@ const initCharts = () => {
         pointBackgroundColor: "#c040a7",
         backgroundColor: "#a22b86",
         lineColor: "#c0269a",
+        borderColor: "#c0269a",
         data: moistureTargets,
       }]
     }
