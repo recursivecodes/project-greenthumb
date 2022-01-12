@@ -5,6 +5,7 @@ let airTempReadings = [];
 let humidityReadings = [];
 let lightReadings = [];
 let moistureReadings = [];
+let moistureTargets = [];
 let soilTempChart, airTempChart, humidityChart, lightChart, moistureChart;
 let chartsInit = false;
 let maxPoints = 50;
@@ -101,6 +102,12 @@ const initCharts = () => {
         backgroundColor: "#71966f",
         lineColor: "#336e00",
         data: moistureReadings,
+      },
+      {
+        pointBackgroundColor: "#c040a7",
+        backgroundColor: "#a22b86",
+        lineColor: "#c0269a",
+        data: moistureTargets,
       }]
     }
   });
@@ -164,6 +171,7 @@ const connect = () => {
     humidityReadings.push({y: reading.humidity, x: reading.readAt});
     lightReadings.push({y: reading.light, x: reading.readAt});
     moistureReadings.push({y: reading.moisture, x: reading.readAt});
+    moistureTargets.push({y: reading.moistureTarget, x: reading.readAt});
 
     // keep the latest `maxPoints`
     if( rawReadings.length > maxPoints ) rawReadings.shift();
@@ -172,6 +180,7 @@ const connect = () => {
     if( humidityReadings.length > maxPoints ) humidityReadings.shift();
     if( lightReadings.length > maxPoints ) lightReadings.shift();
     if( moistureReadings.length > maxPoints ) moistureReadings.shift();
+    if( moistureTargets.length > maxPoints ) moistureTargets.shift();
 
     // annotate the soil chart if the outlet state has changed
     if( rawReadings.length > 1 ) {
