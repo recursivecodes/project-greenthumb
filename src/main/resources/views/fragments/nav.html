@@ -2,8 +2,8 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <body>
 <div th:fragment="navmenu(currentPage)" class="row">
-    <div class="col-12 nav-container shadow">
-        <ul class="nav">
+    <div class="col-12 nav-container">
+        <ul class="nav shadow">
             <li><a th:classappend="${currentPage == 'home'} ? 'active' : ''" href="/page">Home</a></li>
             <li><a th:classappend="${currentPage == 'reports'} ? 'active' : ''" href="/page/reports">Reports</a></li>
         </ul>
