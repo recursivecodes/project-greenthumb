@@ -155,6 +155,7 @@ class Reading {
   moisture;
   moistureTarget;
   outletState;
+  pumpState;
   readAt;
 
   constructor(reading) {
@@ -165,6 +166,7 @@ class Reading {
     this.moisture = +parseFloat(reading.moisture).toFixed(2);
     this.moistureTarget = +parseFloat(reading.waterTarget).toFixed(2);
     this.outletState = reading.outletState ? 'ON' : 'OFF';
+    this.outletState = reading.pumpState ? 'ON' : 'OFF';
     this.readAt = new Date();
   }
 
@@ -219,11 +221,12 @@ const connect = () => {
       lightChart.update();
     }
     document.querySelector('#currentOutletState').innerHTML = reading.outletState;
+    document.querySelector('#currentPumpState').innerHTML = reading.pumpState;
     document.querySelector('#currentAirTemp').innerHTML = reading.airTemp;
     document.querySelector('#currentSoilTemp').innerHTML = reading.soilTemp;
     document.querySelector('#currentHumidity').innerHTML = reading.humidity;
     document.querySelector('#currentMoisture').innerHTML = reading.moisture;
-    document.querySelector('#currentMoistureTarget').innerHTML = `(${reading.moistureTarget})`;
+    document.querySelector('#currentMoistureTarget').innerHTML = reading.moistureTarget;
     document.querySelector('#currentLight').innerHTML = reading.light;
   };
   ws.onclose = (e) => {
