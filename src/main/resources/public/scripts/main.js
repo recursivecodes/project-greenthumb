@@ -94,16 +94,23 @@ const initCharts = () => {
       title: {text: "Moisture (%)", display: true},
       scales: {
         xAxes: xAxes,
+        yAxes: [{
+          ticks: {
+            beginAtZero: true
+          }
+        }],
       },
     },
     data: {
       datasets: [{
+        fill: false,
         pointBackgroundColor: "#4f733f",
         backgroundColor: "#71966f",
         lineColor: "#336e00",
         data: moistureReadings,
       },
       {
+        fill: false,
         pointBackgroundColor: "#c040a7",
         backgroundColor: "#a22b86",
         lineColor: "#c0269a",
