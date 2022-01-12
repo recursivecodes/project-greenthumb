@@ -37,13 +37,14 @@ const initCharts = () => {
         annotations: []
       },
       legend: legend,
-      title: {text: "Air/Soil Temps (\u00B0F)", display: true},
+      title: {text: "Air/Soil Temps", display: true},
       scales: {
         xAxes: xAxes,
       },
     },
     data: {
       datasets: [{
+        label: 'Soil Temp (\u00B0F)',
         fill: false,
         pointBackgroundColor: "#f14343",
         backgroundColor: "#ee8e8e",
@@ -52,6 +53,7 @@ const initCharts = () => {
         data: soilTempReadings,
       },
       {
+        label: 'Air Temp (\u00B0F)',
         fill: false,
         pointBackgroundColor: "#527ac3",
         backgroundColor: "#8698cf",
@@ -65,13 +67,14 @@ const initCharts = () => {
     type: 'line',
     options: {
       legend: legend,
-      title: {text: "Humidity (%)", display: true},
+      title: {text: "Humidity", display: true},
       scales: {
         xAxes: xAxes,
       },
     },
     data: {
       datasets: [{
+        label: 'Humidity (%)',
         fill: false,
         pointBackgroundColor: "#a25cca",
         backgroundColor: "#bd90cb",
@@ -85,7 +88,7 @@ const initCharts = () => {
     type: 'line',
     options: {
       legend: legend,
-      title: {text: "Moisture (%)", display: true},
+      title: {text: "Soil Moisture", display: true},
       scales: {
         xAxes: xAxes,
         yAxes: [{
@@ -97,6 +100,7 @@ const initCharts = () => {
     },
     data: {
       datasets: [{
+        label: 'Moisture (%)',
         fill: false,
         pointBackgroundColor: "#4f733f",
         backgroundColor: "#71966f",
@@ -105,6 +109,7 @@ const initCharts = () => {
         data: moistureReadings,
       },
       {
+        label: 'Moisture Target (%)',
         fill: false,
         pointBackgroundColor: "#c040a7",
         backgroundColor: "#a22b86",
@@ -125,6 +130,7 @@ const initCharts = () => {
     },
     data: {
       datasets: [{
+        label: 'Light (lux)',
         fill: false,
         pointBackgroundColor: "#fd9755",
         backgroundColor: "#ffbe96",
