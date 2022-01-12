@@ -47,6 +47,7 @@ const initCharts = () => {
         pointBackgroundColor: "#f14343",
         backgroundColor: "#ee8e8e",
         lineColor: "#CC0000",
+        borderColor: "#CC0000",
         data: soilTempReadings,
       }]
     }
@@ -65,6 +66,7 @@ const initCharts = () => {
         pointBackgroundColor: "#527ac3",
         backgroundColor: "#8698cf",
         lineColor: "#0044cc",
+        borderColor: "#0044cc",
         data: airTempReadings,
       }]
     }
@@ -83,6 +85,7 @@ const initCharts = () => {
         pointBackgroundColor: "#a25cca",
         backgroundColor: "#bd90cb",
         lineColor: "#a000cc",
+        borderColor: "#a000cc",
         data: humidityReadings,
       }]
     }
@@ -134,6 +137,7 @@ const initCharts = () => {
         pointBackgroundColor: "#fd9755",
         backgroundColor: "#ffbe96",
         lineColor: "#ff6703",
+        borderColor: "#ff6703",
         data: lightReadings,
       }]
     }
