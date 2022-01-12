@@ -3,7 +3,7 @@
 <body>
 <div th:fragment="navmenu(currentPage)" class="row">
     <div class="col-12 nav-container">
-        <ul class="nav shadow">
+        <ul class="nav shadow rounded">
             <li><a th:classappend="${currentPage == 'home'} ? 'active' : ''" href="/page">Home</a></li>
             <li><a th:classappend="${currentPage == 'reports'} ? 'active' : ''" href="/page/reports">Reports</a></li>
         </ul>
