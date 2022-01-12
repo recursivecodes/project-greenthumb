@@ -6,7 +6,7 @@ let humidityReadings = [];
 let lightReadings = [];
 let moistureReadings = [];
 let moistureTargets = [];
-let soilTempChart, airTempChart, humidityChart, lightChart, moistureChart;
+let airSoilTempChart, humidityChart, lightChart, moistureChart;
 let chartsInit = false;
 let maxPoints = 50;
 let ticks = {
@@ -15,7 +15,7 @@ let ticks = {
   },
   maxTicksLimit: 10,
 };
-let legend = {display: false};
+let legend = {display: true};
 
 let xAxes = [{
   legend: {display: false},
@@ -30,39 +30,29 @@ let xAxes = [{
 }];
 
 const initCharts = () => {
-  soilTempChart = new Chart(document.getElementById('soilTempChart').getContext('2d'), {
+  airSoilTempChart = new Chart(document.getElementById('airSoilTempChart').getContext('2d'), {
     type: 'line',
     options: {
       annotation: {
         annotations: []
       },
       legend: legend,
-      title: {text: "Soil Temps (\u00B0F)", display: true},
+      title: {text: "Air/Soil Temps (\u00B0F)", display: true},
       scales: {
         xAxes: xAxes,
       },
     },
     data: {
       datasets: [{
+        fill: false,
         pointBackgroundColor: "#f14343",
         backgroundColor: "#ee8e8e",
         lineColor: "#CC0000",
         borderColor: "#CC0000",
         data: soilTempReadings,
-      }]
-    }
-  });
-  airTempChart = new Chart(document.getElementById('airTempChart').getContext('2d'), {
-    type: 'line',
-    options: {
-      legend: legend,
-      title: {text: "Air Temps (\u00B0F)", display: true},
-      scales: {
-        xAxes: xAxes,
       },
-    },
-    data: {
-      datasets: [{
+      {
+        fill: false,
         pointBackgroundColor: "#527ac3",
         backgroundColor: "#8698cf",
         lineColor: "#0044cc",
@@ -82,6 +72,7 @@ const initCharts = () => {
     },
     data: {
       datasets: [{
+        fill: false,
         pointBackgroundColor: "#a25cca",
         backgroundColor: "#bd90cb",
         lineColor: "#a000cc",
@@ -134,6 +125,7 @@ const initCharts = () => {
     },
     data: {
       datasets: [{
+        fill: false,
         pointBackgroundColor: "#fd9755",
         backgroundColor: "#ffbe96",
         lineColor: "#ff6703",
@@ -203,19 +195,18 @@ const connect = () => {
       let prevReading = rawReadings[rawReadings.length-2]
       if( latestReading.outletState !== prevReading.outletState ) {
         let annotation = getAnnotation(`Outlet: ${latestReading.outletState}`, latestReading.readAt);
-        soilTempChart.options.annotation.annotations.push(annotation)
+        airSoilTempChart.options.annotation.annotations.push(annotation)
       }
-      soilTempChart.options.annotation.annotations.forEach((a, aIdx) => {
+      airSoilTempChart.options.annotation.annotations.forEach((a, aIdx) => {
         if(soilTempReadings.findIndex((d) => d.x === a.value) === -1) {
-          soilTempChart.options.annotation.annotations.splice(aIdx, 1);
+          airSoilTempChart.options.annotation.annotations.splice(aIdx, 1);
           console.log('Removing annotation, it is no longer in range.')
         }
       })
 
     }
     if (chartsInit) {
-      soilTempChart.update();
-      airTempChart.update();
+      airSoilTempChart.update();
       humidityChart.update();
       moistureChart.update();
       lightChart.update();

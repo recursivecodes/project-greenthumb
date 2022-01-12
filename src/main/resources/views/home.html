@@ -20,7 +20,7 @@
     <div th:replace="fragments/nav :: navmenu(${currentView})"></div>
     <div class="row">
         <div class="col-6">
-            <table>
+            <table class="shadow">
                 <thead>
                     <tr>
                         <th>Outlet</th>
@@ -40,7 +40,7 @@
             </table>
         </div>
         <div class="col-6">
-            <table>
+            <table class="shadow">
                 <thead>
                 <tr>
                     <th>Moisture (%)</th>
@@ -62,21 +62,18 @@
     </div>
     <div class="row">
         <div class="col-6">
-            <canvas id="airTempChart" style="height: 300px; width:100%;"></canvas>
+            <canvas id="airSoilTempChart" class="shadow" style="height: 300px; width:100%;"></canvas>
         </div>
-        <div class="col-6">
-            <canvas id="soilTempChart" style="height: 300px; width:100%;"></canvas>
+        <div class="col-4">
+            <canvas id="moistureChart" class="shadow" style="height: 300px; width:100%;"></canvas>
         </div>
     </div>
     <div class="row">
-        <div class="col-4">
-            <canvas id="moistureChart" style="height: 300px; width:100%;"></canvas>
+        <div class="col-6">
+            <canvas id="humidityChart" class="shadow" style="height: 300px; width:100%;"></canvas>
         </div>
-        <div class="col-4">
-            <canvas id="humidityChart" style="height: 300px; width:100%;"></canvas>
-        </div>
-        <div class="col-4">
-            <canvas id="lightChart" style="height: 300px; width:100%;"></canvas>
+        <div class="col-6">
+            <canvas id="lightChart" class="shadow" style="height: 300px; width:100%;"></canvas>
         </div>
     </div>
 </section>
