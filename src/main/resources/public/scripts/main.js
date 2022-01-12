@@ -166,7 +166,7 @@ class Reading {
     this.moisture = +parseFloat(reading.moisture).toFixed(2);
     this.moistureTarget = +parseFloat(reading.waterTarget).toFixed(2);
     this.outletState = reading.outletState ? 'ON' : 'OFF';
-    this.outletState = reading.pumpState ? 'ON' : 'OFF';
+    this.pumpState = reading.pumpState ? 'ON' : 'OFF';
     this.readAt = new Date();
   }
 
