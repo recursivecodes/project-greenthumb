@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: project-greenthumb
+  server:
+    port: 81
   router:
     static-resources:
       default:
@@ -27,7 +29,7 @@ jpa.default.properties.hibernate.hbm2ddl.auto: update
 jpa.default.properties.hibernate.show_sql: true
 oci:
   config:
-    profile: DEFAULT
+    profile: recursivecodes
 codes:
   recursive:
     pushover:
