@@ -37,6 +37,7 @@ jobs:
     - name: 'Docker Build'
       uses: docker/build-push-action@v3
       with:
+        cache-from: type=local,src=build/libs
         tags: iad.ocir.io/idatzojkinhi/greenthumb/greenthumb-client:latest
         push: true
         platforms: linux/arm64
