@@ -1,6 +1,8 @@
 micronaut:
   application:
     name: project-greenthumb
+  server:
+    port: 81
   router:
     static-resources:
       default:

@@ -53,6 +53,7 @@ public class GreenThumbConsumer {
             int soilMoisture = (int) reading.getReadingAsMap().get("moisture");
             long interval = 1000 * 60;
             int moistureThreshold = 15;
+            /*
             if( (System.currentTimeMillis() - lastAlert > interval) && soilMoisture < moistureThreshold) {
                 LOG.info("Sending push notification...");
                 PushNotificationResponse response = pushoverClient.pushMessage(
@@ -63,6 +64,7 @@ public class GreenThumbConsumer {
                 ).blockingFirst();
                 lastAlert = System.currentTimeMillis();
             }
+            */
         }
         else {
             LOG.info("[localhost]: skipping persistence");
