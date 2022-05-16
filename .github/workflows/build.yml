@@ -33,7 +33,14 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.OCIR_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.OCIR_PASSWORD }}
         DOCKER_REGISTRY_URL: iad.ocir.io
-      
+
+    - name: 'Login to DockerHub'
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.OCIR_USERNAME }}
+        password: ${{ secrets.OCIR_PASSWORD }}
+        registry: iad.ocir.io
+
     - name: 'Docker Build'
       uses: docker/build-push-action@v3
       with:
